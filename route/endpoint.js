@@ -5,10 +5,10 @@ const server = require('../controller/server');
 router.get('/', server.server);
 
 const userController = require('../controller/userController');
-router.get('/users', userController.getAllUsers);
-router.get('/users/:id', userController.getUserById);
-router.post('/user', userController.addUser);
-router.put('/user/:id', userController.updateUser);
+router.get('/user', userController.getAllUsers);
+router.get('/user/:id', userController.getUsersById);
+router.post('/user', userController.addData);
+router.put('/user/:id', userController.updateData);
 router.delete('/user/:id', userController.deleteData);
 
 const productController = require('../controller/productController');

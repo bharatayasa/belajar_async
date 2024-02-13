@@ -39,6 +39,12 @@ module.exports = {
                     }
                 })
             })
+            if (result.length === 0) {
+                return res.status(404).json({
+                    message: "Data not found for the given ID", 
+                    data: result
+                })
+            }
             return res.status(200).json({
                 message: "success to get data by id",
                 data: result

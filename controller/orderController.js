@@ -39,6 +39,12 @@ module.exports = {
                     }
                 })
             });
+            if (data.length === 0) {
+                return res.status(404).json({
+                    message: "Data not found for the given ID", 
+                    data: data
+                })
+            }
             return res.status(200).json({
                 message: "success to get order by id", 
                 data: data

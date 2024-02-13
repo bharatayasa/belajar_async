@@ -3,19 +3,19 @@ const connection = require('../db');
 module.exports = {
     getAllUsers: async (req, res) => {
         try {
-            const sql = "SELECT * FROM users"; 
+            const sql = "SELECT * FROM users";
 
             const data = await new Promise((resolve, reject) => {
                 connection.query(sql, (error, result) => {
                     if (error) {
-                        reject(error);
+                        reject(error)
                     } else {
                         resolve(result);
                     }
                 })
             })
             return res.status(200).json({
-                message: "success to get data", 
+                message: "succes to get users data", 
                 data: data
             })
         } catch (error) {
@@ -24,11 +24,11 @@ module.exports = {
                 status: error
             })
         }
-    },
-    getUserById: async (req, res) => {
+    }, 
+    getUsersById: async (req, res) => {
         try {
-            const id = req.params.id;
-            const sql = "SELECT * FROM users WHERE user_id = ?";
+            const id = req.params.id; 
+            const sql = "SELECT * FROM users WHERE user_id = ?"; 
 
             const data = await new Promise((resolve, reject) => {
                 connection.query(sql, id, (error, result) => {
@@ -39,8 +39,14 @@ module.exports = {
                     }
                 })
             })
+            if (data.length === 0) {
+                return res.status(404).json({
+                    message: "Data not found for the given ID", 
+                    data: data
+                });
+            }
             return res.status(200).json({
-                message: "success to get data by id", 
+                message: "success to get user data by id",
                 data: data
             })
         } catch (error) {
@@ -50,9 +56,9 @@ module.exports = {
             })
         }
     },
-    addUser: async (req, res) => {
+    addData: async (req, res) => {
         try {
-            const {username, email} = req.body;
+            const {username, email} = req.body; 
             const sql = "INSERT INTO users (username, email) VALUES (?, ?)";
 
             const data = await new Promise((resolve, reject) => {
@@ -74,12 +80,12 @@ module.exports = {
                 status: error
             })
         }
-    },
-    updateUser: async (req, res) => {
+    }, 
+    updateData: async (req, res) => {
         try {
             const id = req.params.id; 
-            const {username, email} = req.body;
-            const sql = "UPDATE users SET username = ? , email = ? WHERE user_id = ?"; 
+            const {username, email} = req.body; 
+            const sql = "UPDATE users SET username = ?, email = ? WHERE user_id = ?";
 
             const data = await new Promise((resolve, reject) => {
                 connection.query(sql, [username, email, id], (error, result) => {
@@ -90,7 +96,7 @@ module.exports = {
                     }
                 })
             })
-            res.status(200).json({
+            return res.status(200).json({
                 message: "success to update data", 
                 data: data
             })
@@ -100,11 +106,11 @@ module.exports = {
                 status: error
             })
         }
-    },
+    }, 
     deleteData: async (req, res) => {
         try {
             const id = req.params.id; 
-            const sql = "DELETE FROM users WHERE user_id = ?";
+            const sql = "DELETE FROM users WHERE user_id = ?"; 
 
             const data = await new Promise((resolve, reject) => {
                 connection.query(sql, id, (error, result) => {
